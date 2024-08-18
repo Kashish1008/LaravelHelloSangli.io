@@ -53,16 +53,32 @@
         <h2>Popular Categories</h2>
         <div class="row pt-5">
 
-            @if ($categories->isNotEmpty())
-            @foreach ($categories as $category)
-            <div class="col-lg-4 col-xl-3 col-md-6">
-                <div class="single_catagory">
-                    <a href="{{ route('jobs').'?category='.$category->id }}"><h4 class="pb-2">{{ $category->name }}</h4></a>
-                    <p class="mb-0"> <span>0</span> Available position</p>
-                </div>
-            </div> 
-            @endforeach                
+        @if ($categories->isNotEmpty())
+    @foreach ($categories as $category)
+    <div class="col-lg-4 col-xl-3 col-md-6">
+        <div class="single_catagory">
+            <a href="{{ route('jobs').'?category='.$category->id }}">
+                <h4 class="pb-2">{{ $category->name }}</h4>
+            </a>
+            
+            {{-- Get the job count for the current category --}}
+            @php
+                $jobCount = $jobCounts->firstWhere('category_id', $category->id)->count ?? 0;
+            @endphp
+            
+            @if ($jobCount > 0)
+                <p class="mb-0">
+                    <span>{{ $jobCount }}</span> Available position(s)
+                </p>
+            @else
+                <p class="mb-0">No Available positions</p>
             @endif
+
+        </div>
+    </div> 
+    @endforeach                
+@endif
+
         </div>
     </div>
 </section>
