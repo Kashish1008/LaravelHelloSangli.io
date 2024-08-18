@@ -12,6 +12,11 @@ class HomeController extends Controller
     public function index() {
 
         $categories = Category::where('status',1)->orderBy('name','ASC')->take(8)->get();
+        // $jobCount = Job::where('category_id', 2)->count();
+        $jobCounts = Job::selectRaw('category_id, COUNT(*) as count')
+        ->groupBy('category_id')
+        ->get();
+
 
         $newCategories = Category::where('status',1)->orderBy('name','ASC')->get();
 
@@ -31,7 +36,8 @@ class HomeController extends Controller
             'categories' => $categories,
             'featuredJobs' => $featuredJobs,
             'latestJobs' => $latestJobs,
-            'newCategories' => $newCategories
+            'newCategories' => $newCategories,
+            'jobCounts'=>$jobCounts
         ]);
     }
 }
