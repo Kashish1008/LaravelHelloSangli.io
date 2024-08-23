@@ -107,7 +107,7 @@
                                                 <p>Experience: {{ $job->experience }}</p> --}}
                                                 @if (!is_null($job->salary))
                                                 <p class="mb-0">
-                                                    <span class="fw-bolder"><i class="fa fa-inr"></i></span>
+                                                    <span class="fw-bolder"><i class="fa fa-inr"></i>demo2</span>
                                                     <span class="ps-1">{{ $job->salary }}</span>
                                                 </p> 
                                                 @endif                                                
