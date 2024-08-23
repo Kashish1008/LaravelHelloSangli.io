@@ -110,7 +110,7 @@
                                             </p>
                                             @if (!is_null($featuredJob->salary))
                                             <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-usd"></i></span>
+                                                <span class="fw-bolder"><i class="fa fa-inr"></i></span>
                                                 <span class="ps-1">{{ $featuredJob->salary }}</span>
                                             </p>
                                             @endif                                            
@@ -158,7 +158,7 @@
                                             </p>
                                             @if (!is_null($latestJob->salary))
                                             <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-usd"></i></span>
+                                                <span class="fw-bolder"><i class="fa fa-inr"></i></span>
                                                 <span class="ps-1">{{ $latestJob->salary }}</span>
                                             </p>
                                             @endif                                            
