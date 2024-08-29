@@ -30,12 +30,18 @@ class HomeController extends Controller
                         ->orderBy('created_at','DESC')
                         ->take(6)->get();
 
-
+        $governmentJobs = Job::where('status', 1)
+                        ->with('jobType')
+                        ->orderBy('created_at', 'DESC')
+                        ->where('category_id', 2)  
+                        ->take(6)
+                        ->get();
 
         return view('front.home',[
             'categories' => $categories,
             'featuredJobs' => $featuredJobs,
             'latestJobs' => $latestJobs,
+            'governmentJobs'=>$governmentJobs,
             'newCategories' => $newCategories,
             'jobCounts'=>$jobCounts
         ]);
