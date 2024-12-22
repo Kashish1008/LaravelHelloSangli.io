@@ -1,7 +1,7 @@
 @extends('front.layouts.app')
 
 @section('main')
-<section class="section-0 lazy d-flex bg-image-style dark align-items-center "  class="" data-bg="{{ asset('assets/images/banner5.jpg') }}">
+<!-- <section class="section-0 lazy d-flex bg-image-style dark align-items-center "  class="" data-bg="{{ asset('assets/images/banner5.jpg') }}">
     <div class="container">
         <div class="row">
             <div class="col-12 col-xl-8">
@@ -11,7 +11,71 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+            <section class="section-0 lazy d-flex bg-image-style dark align-items-center" data-bg="{{ asset('assets/images/banner-1.jpg') }}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <h1>Find your dream job</h1>
+                            <p>Thousands of jobs available.</p>
+                            <div class="banner-btn mt-5">
+                                <a href="#" class="btn btn-primary mb-4 mb-sm-0">Explore Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+            <section class="section-0 lazy d-flex bg-image-style dark align-items-center" data-bg="{{ asset('assets/images/banner5.jpg') }}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <h1>Achieve Your Goals</h1>
+                            <p>Discover opportunities tailored to you.</p>
+                            <div class="banner-btn mt-5">
+                                <a href="#" class="btn btn-primary mb-4 mb-sm-0">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+            <section class="section-0 lazy d-flex bg-image-style dark align-items-center" data-bg="{{ asset('assets/images/banner7.jpg') }}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-xl-8">
+                            <h1>Step into Your Future</h1>
+                            <p>Explore careers across various industries.</p>
+                            <div class="banner-btn mt-5">
+                                <a href="#" class="btn btn-primary mb-4 mb-sm-0">Start Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
 <section class="section-1 py-5 "> 
     <div class="container">
