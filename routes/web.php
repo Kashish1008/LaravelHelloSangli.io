@@ -30,13 +30,15 @@ Route::get('/jobs/detail/{id}',[JobsController::class,'detail'])->name('jobDetai
 Route::post('/apply-job',[JobsController::class,'applyJob'])->name('applyJob');
 Route::post('/save-job',[JobsController::class,'saveJob'])->name('saveJob');
 
+
+
 Route::get('/forgot-password',[AccountController::class,'forgotPassword'])->name('account.forgotPassword');
 Route::post('/process-forgot-password',[AccountController::class,'processForgotPassword'])->name('account.processForgotPassword');
 Route::get('/reset-password/{token}',[AccountController::class,'resetPassword'])->name('account.resetPassword');
 Route::post('/process-reset-password',[AccountController::class,'processResetPassword'])->name('account.processResetPassword');
 
 
-Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
+    Route::group(['prefix' => 'admin','middleware' => 'checkRole'], function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/users',[UserController::class,'index'])->name('admin.users');
     Route::get('/users/{id}',[UserController::class,'edit'])->name('admin.users.edit');
@@ -73,6 +75,16 @@ Route::group(['prefix' => 'account'], function(){
         Route::post('/update-job/{jobId}',[AccountController::class,'updateJob'])->name('account.updateJob');   
         Route::post('/delete-job',[AccountController::class,'deleteJob'])->name('account.deleteJob');   
         Route::get('/my-job-applications',[AccountController::class,'myJobApplications'])->name('account.myJobApplications');  
+        //Srushti K created these Routes 
+        Route::get('/add-category',[AccountController::class,'addCategory'])->name('account.addCategory');
+        Route::get('/category-list',[AccountController::class,'categoryList'])->name('account.categoryList');
+        Route::get('/add-jobtype',[AccountController::class,'addJobtype'])->name('account.addJobtype');
+        Route::get('/jobtype-list',[AccountController::class,'jobtypeList'])->name('account.jobtypeList');
+        Route::post('/save-category', [AccountController::class, 'saveCategory'])->name('account.saveCategory');
+        Route::post('/save-jobType', [AccountController::class, 'saveJobType'])->name('account.saveJobType');
+        Route::post('/update-category-status', [AccountController::class, 'updateCategoryStatus'])->name('account.updateCategoryStatus');
+        Route::post('/update-jobtype-status', [AccountController::class, 'updateJobTypeStatus'])->name('account.updateJobTypeStatus');
+
 
         Route::post('/remove-job-application',[AccountController::class,'removeJobs'])->name('account.removeJobs');   
         Route::get('/saved-jobs',[AccountController::class,'savedJobs'])->name('account.savedJobs');  

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -527,4 +528,156 @@ class AccountController extends Controller
         return redirect()->route('account.login')->with('success','You have successfully changed your password.');
 
     }
+
+    public function addCategory(Request $request) {
+         
+        $catlist = Category::orderBy('id', 'ASC')->get();
+        $catlist = Category::paginate(10);
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('front.account.category-list', compact('catlist'))->render(),
+            ]);
+        }
+
+                  
+        return view('front.account.add-category',[
+            'catlist' => $catlist
+        ]);
+    }
+
+    public function addJobtype(Request $request) {
+
+        $type_list = JobType::orderBy('id', 'ASC')->get();
+        $type_list = JobType::paginate(10);
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('front.account.job.jobtype-list', compact('type_list'))->render(),
+            ]);
+        }
+
+                  
+        return view('front.account.job.add-jobtype',[
+            'type_list' => $type_list
+        ]);
+    }
+
+
+    public function saveJobType(Request $request)
+        {        
+            $rules = [
+                'jobType' => 'required|min:5|max:200',
+                'status' => 'required',
+            ];
+        
+            $validator = Validator::make($request->all(), $rules);
+        
+            if ($validator->passes()) {
+                // Insert the data using a raw query
+                $addjobtype = \DB::insert('INSERT INTO job_types (name, status, created_at, updated_at) VALUES (?, ?, ?, ?)', [
+                    $request->jobType,
+                    $request->status,
+                    now(), // current timestamp for created_at
+                    now()  // current timestamp for updated_at
+                ]);
+              echo $addjobtype;
+        
+                if ($addjobtype) {
+                    session()->flash('success', 'Job Type  added successfully.');
+        
+                    return response()->json([
+                        'status' => true,
+                        'errors' => []
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['db' => ['Failed to insert job type into the database.']]
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
+        }
+   
+        public function saveCategory(Request $request)
+        {        
+            $rules = [
+                'category' => 'required|min:5|max:200',
+                'status' => 'required',
+            ];
+        
+            $validator = Validator::make($request->all(), $rules);
+        
+            if ($validator->passes()) {
+                // Insert the data using a raw query
+                $inserted = \DB::insert('INSERT INTO categories (name, status, created_at, updated_at) VALUES (?, ?, ?, ?)', [
+                    $request->category,
+                    $request->status,
+                    now(), // current timestamp for created_at
+                    now()  // current timestamp for updated_at
+                ]);
+              
+        
+                if ($inserted) {
+                    session()->flash('success', 'Category added successfully.');
+        
+                    return response()->json([
+                        'status' => true,
+                        'errors' => []
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['db' => ['Failed to insert category into the database.']]
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
+        }
+
+        
+        public function updateCategoryStatus(Request $request)
+        {
+            $request->validate([
+                'categoryId' => 'required|exists:categories,id',
+                'status' => 'required|boolean'
+            ]);
+    
+            $category = Category::find($request->categoryId);
+            if ($category) {
+                $category->status = $request->status;
+                $category->save();
+    
+                return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
+            }
+    
+            return response()->json(['success' => false, 'message' => 'Category not found!'], 404);
+        }
+
+        public function updateJobTypeStatus(Request $request)
+        {
+            $request->validate([
+                'jobtypeId' => 'required|exists:job_types,id',
+                'status' => 'required|boolean'
+            ]);
+    
+            $jobTypes = JobType::find($request->jobtypeId);
+            if ($jobTypes) {
+                $jobTypes->status = $request->status;
+                $jobTypes->save();
+    
+                return response()->json(['success' => true, 'message' => 'Status updated successfully!']);
+            }
+    
+            return response()->json(['success' => false, 'message' => 'Category not found!'], 404);
+        }
 }
